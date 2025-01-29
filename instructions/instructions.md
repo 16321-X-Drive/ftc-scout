@@ -6,6 +6,20 @@ Setting up an FTCScout development environment takes a few steps. This guide wil
 
 FTCScout uses a Postgres SQL database. You must set it up separately before running FTCScout.
 
+Example on Ubuntu:
+
+```bash
+sudo apt install postgresql-client postgresql
+sudo -u postgres createuser ftcscoutuser
+sudo -u postgres createdb ftcscoutdb
+sudo -u postgres psql ftcscoutdb
+  alter user ftcscoutuser with encrypted password 'ftcscoutpassword';
+  grant all privileges on database ftcscoutdb to ftcscoutuser;
+  grant all privileges on schema public to ftcscoutuser;
+  \quit
+sudo systemctl restart postgresql
+```
+
 ## Getting an FTC API key
 
 You must use an FTC Event Web API key to fetch the data used in FTCScout. You can get one by following the instructions [here](https://ftc-events.firstinspires.org/api).
