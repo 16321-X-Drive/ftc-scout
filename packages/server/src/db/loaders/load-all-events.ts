@@ -17,7 +17,7 @@ export async function loadAllEvents(season: Season) {
 
     await DATA_SOURCE.transaction(async (em) => {
         await em.save(dbEvents, { chunk: 100 });
-        await em.save(DataHasBeenLoaded.create({ season, events: true }));
+        await em.save(DataHasBeenLoaded.create({ season, events: true }), { chunk: 100 });
     });
 
     console.info(`Finished loading events.`);

@@ -40,7 +40,7 @@ export async function getFromFtcApi(path: string, params: Record<string, any> = 
     let resp = await throttledMakeRequest(url);
 
     if (CACHE_REQ && !!resp) {
-        await FtcApiReq.create({ url, resp }).save();
+        await FtcApiReq.create({ url, resp }).save({ chunk: 100 });
     }
 
     return resp;

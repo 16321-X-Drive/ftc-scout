@@ -206,7 +206,7 @@ export class Event extends BaseEntity {
                     ? api.liveStreamUrl.trim()
                     : null,
             webcasts: api.webcasts ? api.webcasts : [],
-            timezone: api.timezone ?? "UTC",
+            timezone: api.timezone === "Asia/Calcutta"? "Asia/Kolkata" : api.timezone ?? "UTC",
             start: new Date(api.dateStart),
             end: new Date(api.dateEnd),
             modifiedRules: MODIFIED_RULES.indexOf(api.code) != -1,

@@ -25,7 +25,7 @@ export async function loadAllAwards(season: Season, loadType: LoadType) {
             .flat()
             .map((a) => Award.fromApi(season, a))
             .filter(notEmpty);
-        await Award.save(dbAwards);
+        await Award.save(dbAwards, { chunk: 100 });
 
         console.info(`Loaded ${Math.min(i + chunkSize, events.length) + 1}/${events.length}.`);
     }
@@ -33,7 +33,7 @@ export async function loadAllAwards(season: Season, loadType: LoadType) {
     await DataHasBeenLoaded.create({
         season,
         awards: true,
-    }).save();
+    }).save({ chunk: 100 });
 
     console.info(`Finished loading awards.`);
 }

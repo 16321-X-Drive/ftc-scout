@@ -20,9 +20,23 @@ export async function loadAllTeams(season: Season) {
             await em.save(dbTeams, { chunk: 100 });
         } else {
             // Don't override date from latest season with older seasons.
-            await em.createQueryBuilder().insert().into(Team).values(dbTeams).orIgnore().execute();
+            const chunkSize = 1000;
+            const chunks = [];
+
+            for (let i = 0; i < dbTeams.length; i += chunkSize) {
+                chunks.push(dbTeams.slice(i, i + chunkSize));
+            }
+
+            for (const chunk of chunks) {
+                await em.createQueryBuilder()
+                    .insert()
+                    .into(Team)
+                    .values(chunk)
+                    .orIgnore()
+                    .execute();
+            }
         }
-        await em.save(DataHasBeenLoaded.create({ season, teams: true }));
+        await em.save(DataHasBeenLoaded.create({ season, teams: true }), { chunk: 100 });
     });
 
     console.info(`Finished loading teams.`);

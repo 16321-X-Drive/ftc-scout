@@ -41,7 +41,7 @@ export const BestNameQueries: Record<string, GraphQLFieldConfig<any, any>> = {
                 team1: teams[0].number,
                 team2: teams[1].number,
             });
-            await bestName.save();
+            await bestName.save({ chunk: 100 });
             return {
                 id: bestName.id,
                 team1D: teams[0],
@@ -70,7 +70,7 @@ export const BestNameMutations: Record<string, GraphQLFieldConfig<any, any>> = {
                 team1: teams[0].number,
                 team2: teams[1].number,
             });
-            await bestName.save();
+            await bestName.save({ chunk: 100 });
             return {
                 id: bestName.id,
                 team1D: teams[0],

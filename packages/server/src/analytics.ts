@@ -48,6 +48,6 @@ export function handleAnalytics(req: Request, res: Response) {
             browser,
             deviceType,
             date: new Date(time),
-        }).save();
+        }).save({ chunk: 100 });
     } catch (e) {}
 }

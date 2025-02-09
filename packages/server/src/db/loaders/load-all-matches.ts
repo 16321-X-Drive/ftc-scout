@@ -132,7 +132,7 @@ export async function loadAllMatches(season: Season, loadType: LoadType) {
     await DataHasBeenLoaded.create({
         season,
         matches: true,
-    }).save();
+    }).save({ chunk: 100 });
 
     console.info(`Finished loading events.`);
 }
